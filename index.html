@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TravanaAI - Premium Travel Planner & Companion</title>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css?v=6">
+</head>
+<body class="theme-cyber-neon">
+
+  <!-- Background Wrapper with Floating Elements -->
+  <div class="app-bg-wrapper">
+    <!-- Floating hot air balloon matching the mockup -->
+    <svg class="hot-air-balloon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 10C27.9 10 10 27.9 10 50C10 65.5 19.8 78.7 34 83.5C34.6 86 35.8 90 38 90H62C64.2 90 65.4 86 66 83.5C80.2 78.7 90 65.5 90 50C90 27.9 72.1 10 50 10Z" fill="url(#balloonGrad)"/>
+      <rect x="46" y="93" width="8" height="7" rx="1" fill="#8B4513"/>
+      <line x1="42" y1="88" x2="47" y2="93" stroke="white" stroke-width="1.5"/>
+      <line x1="58" y1="88" x2="53" y2="93" stroke="white" stroke-width="1.5"/>
+      <defs>
+        <linearGradient id="balloonGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f72585"/>
+          <stop offset="100%" stop-color="#7209b7"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    
+    <!-- Floating SVGs/Shapes representing clouds -->
+    <svg class="cloud cloud-1" viewBox="0 0 120 80" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 45C104.4 45 108 41.4 108 37C108 32.6 104.4 29 100 29C99.2 29 98.4 29.1 97.7 29.4C95.4 20.9 87.7 15 78.4 15C72 15 66.2 18.2 62.7 23.3C59.9 20.6 56.1 19 52 19C44.3 19 37.9 24.6 36.4 32.1C35.6 32 34.8 32 34 32C22.9 32 14 40.9 14 52C14 63.1 22.9 72 34 72H100C109.9 72 118 63.9 118 54C118 49 110 45 100 45Z" />
+    </svg>
+    <svg class="cloud cloud-2" viewBox="0 0 120 80" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 45C104.4 45 108 41.4 108 37C108 32.6 104.4 29 100 29C99.2 29 98.4 29.1 97.7 29.4C95.4 20.9 87.7 15 78.4 15C72 15 66.2 18.2 62.7 23.3C59.9 20.6 56.1 19 52 19C44.3 19 37.9 24.6 36.4 32.1C35.6 32 34.8 32 34 32C22.9 32 14 40.9 14 52C14 63.1 22.9 72 34 72H100C109.9 72 118 63.9 118 54C118 49 110 45 100 45Z" />
+    </svg>
+    <svg class="cloud cloud-3" viewBox="0 0 120 80" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 45C104.4 45 108 41.4 108 37C108 32.6 104.4 29 100 29C99.2 29 98.4 29.1 97.7 29.4C95.4 20.9 87.7 15 78.4 15C72 15 66.2 18.2 62.7 23.3C59.9 20.6 56.1 19 52 19C44.3 19 37.9 24.6 36.4 32.1C35.6 32 34.8 32 34 32C22.9 32 14 40.9 14 52C14 63.1 22.9 72 34 72H100C109.9 72 118 63.9 118 54C118 49 110 45 100 45Z" />
+    </svg>
+  </div>
+
+  <!-- Primary Smartphone Shell (Translucent Dock Frame) -->
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="logo-container">
+        <div class="logo-icon">
+          <i class="fas fa-plane"></i>
+        </div>
+        <span class="logo-text">Travana<span class="logo-highlight">AI</span></span>
+      </div>
+      
+      <div class="header-actions">
+        <!-- Theme selection chip (Redesigned: opens bottom sheet modal) -->
+        <button id="theme-select-btn" class="btn-glass">
+          <span id="header-theme-icon">🌌</span>
+          <span id="header-theme-name">Cyber Neon</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        
+        <!-- Ambient Sound button -->
+        <button id="sound-btn" class="btn-glass btn-icon-only">
+          <i class="fas fa-volume-up"></i>
+        </button>
+        
+        <!-- Gamification Level indicator -->
+        <div class="user-xp-badge" title="Unlock levels by planning adventures!">
+          <div class="user-xp-info">
+            <span>👑 Lv 1</span>
+            <span id="xp-text">120/500</span>
+          </div>
+          <div class="user-xp-bar">
+            <div id="xp-progress" class="user-xp-progress" style="width: 24%;"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Screens Container (Single Page app sections) -->
+    <main class="app-content">
+
+      <!-- ==================== HOME SCREEN ==================== -->
+      <section id="home-page" class="app-page active-page">
+        <!-- Personalization / Wizard trigger card -->
+        <div class="personalization-trigger-card" id="btn-open-wizard" style="position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(247, 37, 133, 0.2) 0%, rgba(114, 9, 183, 0.2) 100%); border: 1.5px solid var(--accent-color); box-shadow: var(--shadow-glow); transition: var(--transition-bounce);">
+          <!-- Decorative floating glow bubbles -->
+          <div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: var(--accent-color); filter: blur(35px); opacity: 0.45; pointer-events: none;"></div>
+          <div style="position: absolute; bottom: -20px; left: -20px; width: 80px; height: 80px; background: var(--accent-secondary); filter: blur(25px); opacity: 0.3; pointer-events: none;"></div>
+          
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 20px; z-index: 2; position: relative;">
+            <div style="flex-grow: 1;">
+              <div class="pers-card-title" style="font-size: 20px; margin-bottom: 8px;">
+                <span>🔮 Smart AI Travel Planner</span>
+              </div>
+              <p class="pers-card-subtitle" style="font-size: 13px; margin-bottom: 16px; color: rgba(245,245,250,0.9); line-height: 1.5;">Answer a few quick questions and let Pip the mascot design an adventure matching your vibe, origin, and budget.</p>
+              <button class="btn-pers-trigger" style="padding: 10px 24px; font-size: 12px; font-weight: 800; border-radius: 30px; box-shadow: 0 0 15px var(--accent-glow); animation: letGoPulse 2s infinite ease-in-out;">Let's Go &rarr;</button>
+            </div>
+            <!-- Animated floating mascot on the right -->
+            <div class="floating-mascot-home" style="font-size: 56px; filter: drop-shadow(0 8px 15px rgba(0,0,0,0.5)); animation: mascotFloatHome 4s ease-in-out infinite; user-select: none;">🦊</div>
+          </div>
+        </div>
+
+        <!-- Returning User Personalization card (JS shows this when history has items) -->
+        <div class="personalization-trigger-card" id="returning-user-pers-card" style="display: none; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(74, 222, 128, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%); border: 1.5px solid rgba(74, 222, 128, 0.4); box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: var(--transition-bounce);">
+          <div style="position: absolute; top: -30px; right: -30px; width: 100px; height: 100px; background: rgba(74, 222, 128, 0.4); filter: blur(30px); opacity: 0.3; pointer-events: none;"></div>
+          
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 20px; z-index: 2; position: relative; width: 100%;">
+            <div style="flex-grow: 1;">
+              <div class="pers-card-title" style="font-size: 16px; margin-bottom: 6px;">
+                <span>🦊 Because you enjoyed Mussoorie</span>
+              </div>
+              <p class="pers-card-subtitle" style="font-size: 12px; margin-bottom: 14px; color: rgba(245,245,250,0.9); line-height: 1.4;">Other mountain explorers like you loved Kasol, Jibhi, and Rishikesh. Let's build a customized road trip here!</p>
+              <button class="btn-pers-trigger" id="btn-pers-mussoorie" style="background: linear-gradient(135deg, #4ade80 0%, #3b82f6 100%); box-shadow: 0 0 12px rgba(74, 222, 128, 0.3);">Plan Kasol</button>
+            </div>
+            <div class="floating-mascot-home" style="font-size: 46px; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.4)); animation: mascotFloatHome 5s ease-in-out infinite; animation-delay: -1s; user-select: none;">🗺️</div>
+          </div>
+        </div>
+
+        <div class="section-header">
+          <h2 class="section-title">🌎 International (Global Choice)</h2>
+          <p class="section-subtitle">Top-ranked global destinations curated worldwide</p>
+        </div>
+
+        <!-- Santorini & Kyoto cards -->
+        <div class="destination-grid">
+          
+          <!-- Santorini -->
+          <div class="destination-card">
+            <div class="card-image-wrapper">
+              <img class="card-image" src="assets/images/santorini.jpg" alt="Santorini, Greece">
+              <button class="card-save-btn" data-id="santorini" title="Save Santorini">
+                <i class="fas fa-heart"></i>
+              </button>
+            </div>
+            <div class="card-content">
+              <div class="card-region">Cyclades, Greece</div>
+              <h3 class="card-name">Santorini</h3>
+              <div class="card-stats-row">
+                <div class="stat-item"><i class="fas fa-users"></i> 2.1M/yr</div>
+                <div class="stat-item"><i class="fas fa-cloud-sun"></i> 24°C, Sunny</div>
+              </div>
+              <ul class="card-attractions-list">
+                <li class="attraction-item"><span class="attraction-dot">•</span> Oia Sunset Castle</li>
+                <li class="attraction-item"><span class="attraction-dot">•</span> Red Beach</li>
+                <li class="attraction-item"><span class="attraction-dot">•</span> Akrotiri Archaeological Site</li>
+              </ul>
+              <div class="card-footer">
+                <div class="price-box">
+                  <span class="price-label">Est. Cost</span>
+                  <span class="price-value">₹1,65,000</span>
+                </div>
+                <div class="rating-box">
+                  <i class="fas fa-star"></i> 4.9
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kyoto -->
+          <div class="destination-card">
+            <div class="card-image-wrapper">
+              <img class="card-image" src="assets/images/kyoto.jpg" alt="Kyoto, Japan">
+              <div class="card-badge card-badge-glow">
+                <span class="badge-dot"></span>
+                <span>☀️ Global Choice 96%</span>
+              </div>
+              <button class="card-save-btn" data-id="kyoto" title="Save Kyoto">
+                <i class="fas fa-heart"></i>
+              </button>
+            </div>
+            <div class="card-content">
+              <div class="card-region">Kansai, Japan</div>
+              <h3 class="card-name">Kyoto</h3>
+              <div class="card-stats-row">
+                <div class="stat-item"><i class="fas fa-users"></i> 3.5M/yr</div>
+                <div class="stat-item"><i class="fas fa-cloud"></i> 19°C, Scattered</div>
+              </div>
+              <ul class="card-attractions-list">
+                <li class="attraction-item"><span class="attraction-dot">•</span> Fushimi Inari Shrine Gates</li>
+                <li class="attraction-item"><span class="attraction-dot">•</span> Kinkaku-ji (Golden Pavilion)</li>
+                <li class="attraction-item"><span class="attraction-dot">•</span> Arashiyama Bamboo Grove</li>
+              </ul>
+              <div class="card-footer">
+                <div class="price-box">
+                  <span class="price-label">Est. Cost</span>
+                  <span class="price-value">₹85,000</span>
+                </div>
+                <div class="rating-box">
+                  <i class="fas fa-star"></i> 4.8
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Getaways Close to You (Slider) -->
+        <div class="getaways-section">
+          <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h2 class="section-title">📍 Getaways Close to You</h2>
+              <p class="section-subtitle">Road-trip escapes under 6 hours from Delhi</p>
+            </div>
+            <a href="#" style="color: var(--accent-color); font-size: 11px; font-weight: 600; text-decoration: none;">View all &rarr;</a>
+          </div>
+          <div class="getaways-slider">
+            
+            <div class="getaway-card" data-dest="Rishikesh">
+              <img class="getaway-img" src="assets/images/rishikesh.jpg" alt="Rishikesh">
+              <div class="getaway-overlay">
+                <span class="getaway-name">Rishikesh</span>
+                <span class="getaway-dist">240 km away</span>
+              </div>
+            </div>
+
+            <div class="getaway-card" data-dest="Nainital">
+              <img class="getaway-img" src="assets/images/nainital.jpg" alt="Nainital">
+              <div class="getaway-overlay">
+                <span class="getaway-name">Nainital</span>
+                <span class="getaway-dist">290 km away</span>
+              </div>
+            </div>
+
+            <div class="getaway-card" data-dest="Shimla">
+              <img class="getaway-img" src="assets/images/shimla.jpg" alt="Shimla">
+              <div class="getaway-overlay">
+                <span class="getaway-name">Shimla</span>
+                <span class="getaway-dist">350 km away</span>
+              </div>
+            </div>
+
+            <div class="getaway-card" data-dest="Jaipur">
+              <img class="getaway-img" src="assets/images/jaipur.jpg" alt="Jaipur">
+              <div class="getaway-overlay">
+                <span class="getaway-name">Jaipur</span>
+                <span class="getaway-dist">280 km away</span>
+              </div>
+            </div>
+
+            <div class="getaway-card" data-dest="Manali">
+              <img class="getaway-img" src="assets/images/manali.jpg" alt="Manali">
+              <div class="getaway-overlay">
+                <span class="getaway-name">Manali</span>
+                <span class="getaway-dist">540 km away</span>
+              </div>
+            </div>
+
+            <div class="getaway-card" data-dest="Kasol">
+              <img class="getaway-img" src="assets/images/kasol.jpg" alt="Kasol">
+              <div class="getaway-overlay">
+                <span class="getaway-name">Kasol</span>
+                <span class="getaway-dist">510 km away</span>
+              </div>
+            </div>
+
+            <div class="getaway-card" data-dest="Mussoorie">
+              <img class="getaway-img" src="assets/images/mussoorie.jpg" alt="Mussoorie">
+              <div class="getaway-overlay">
+                <span class="getaway-name">Mussoorie</span>
+                <span class="getaway-dist">290 km away</span>
+              </div>
+            </div>
+
+            <div class="getaway-card" data-dest="Dehradun">
+              <img class="getaway-img" src="assets/images/jaipur.jpg" alt="Dehradun">
+              <div class="getaway-overlay">
+                <span class="getaway-name">Dehradun</span>
+                <span class="getaway-dist">250 km away</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Popular Destinations Section -->
+        <div class="popular-section">
+          <div class="section-header">
+            <h2 class="section-title">✨ Popular Destinations</h2>
+            <p class="section-subtitle">Most loved by travelers like you</p>
+          </div>
+          <div class="mini-grid">
+            <div class="mini-card" data-dest="Manali">
+              <img class="mini-card-img" src="assets/images/shimla.jpg" alt="Manali">
+              <div class="mini-card-save-btn" data-id="manali"><i class="fas fa-heart"></i></div>
+              <div class="mini-card-overlay">
+                <span class="mini-card-name">Manali</span>
+              </div>
+            </div>
+            <div class="mini-card" data-dest="Goa Beaches">
+              <img class="mini-card-img" src="assets/images/rishikesh.jpg" alt="Goa">
+              <div class="mini-card-save-btn" data-id="goa"><i class="fas fa-heart"></i></div>
+              <div class="mini-card-overlay">
+                <span class="mini-card-name">Goa</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== EXPLORE SCREEN ==================== -->
+      <section id="explore-page" class="app-page">
+        <div class="section-header">
+          <h2 class="section-title">🔍 Discover Adventures</h2>
+          <p class="section-subtitle">Explore places fitting your vibe</p>
+        </div>
+
+        <div class="explore-search-bar">
+          <div class="explore-input-container">
+            <i class="fas fa-search"></i>
+            <input type="text" class="explore-input" placeholder="Search beaches, mountains, food...">
+          </div>
+        </div>
+
+        <div class="filter-pills-slider">
+          <div class="filter-pill active" data-type="all">All Vibes</div>
+          <div class="filter-pill" data-type="mountain">🏔️ Mountains</div>
+          <div class="filter-pill" data-type="beach">🏖️ Beaches</div>
+          <div class="filter-pill" data-type="cultural">🕌 Heritage</div>
+          <div class="filter-pill" data-type="nature">🌿 Nature</div>
+        </div>
+
+        <div class="explore-masonry">
+          
+          <div class="masonry-item tall" data-dest="Kyoto">
+            <div class="masonry-img-wrapper">
+              <img src="assets/images/kyoto.jpg" alt="Kyoto">
+              <span class="masonry-match-badge">96% Match</span>
+            </div>
+            <div class="masonry-info">
+              <div class="masonry-title">Kyoto Cherry Pagodas</div>
+              <div class="masonry-details">
+                <span>₹85,000</span>
+                <span>⭐ 4.8</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="masonry-item short" data-dest="Santorini">
+            <div class="masonry-img-wrapper">
+              <img src="assets/images/santorini.jpg" alt="Santorini">
+              <span class="masonry-match-badge">91% Match</span>
+            </div>
+            <div class="masonry-info">
+              <div class="masonry-title">Santorini Blue Domes</div>
+              <div class="masonry-details">
+                <span>₹1,65,000</span>
+                <span>⭐ 4.9</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="masonry-item medium" data-dest="Rishikesh">
+            <div class="masonry-img-wrapper">
+              <img src="assets/images/rishikesh.jpg" alt="Rishikesh">
+              <span class="masonry-match-badge">88% Match</span>
+            </div>
+            <div class="masonry-info">
+              <div class="masonry-title">Rishikesh River Raft</div>
+              <div class="masonry-details">
+                <span>₹12,000</span>
+                <span>⭐ 4.7</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="masonry-item tall" data-dest="Jaipur">
+            <div class="masonry-img-wrapper">
+              <img src="assets/images/jaipur.jpg" alt="Jaipur">
+              <span class="masonry-match-badge">94% Match</span>
+            </div>
+            <div class="masonry-info">
+              <div class="masonry-title">Jaipur Royal Forts</div>
+              <div class="masonry-details">
+                <span>₹22,000</span>
+                <span>⭐ 4.8</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== MATCH (TINDER SWIPE) SCREEN ==================== -->
+      <section id="match-page" class="app-page">
+        <div class="section-header">
+          <h2 class="section-title">🔥 Wander Match</h2>
+          <p class="section-subtitle">Swipe right to save, left to skip suggestions</p>
+        </div>
+
+        <div class="match-container">
+          
+          <!-- Learning Toast Notification -->
+          <div id="learning-toast" class="engine-toast">
+            ✨ Travel mascot Pip: "Adding nature tags to your preferences!"
+          </div>
+          
+          <!-- Swiping Stack -->
+          <div class="swipe-deck" id="swipe-deck-container">
+            
+            <!-- Card 1 -->
+            <div class="swipe-card" data-id="card-rishikesh" data-dest="Rishikesh">
+              <div class="swipe-card-img-wrapper">
+                <img src="assets/images/rishikesh.jpg" alt="Rishikesh">
+                <div class="swipe-overlay-stamp like">SAVE</div>
+                <div class="swipe-overlay-stamp skip">SKIP</div>
+              </div>
+              <div class="swipe-card-info">
+                <div class="swipe-card-header">
+                  <h3 class="swipe-card-title">Rishikesh</h3>
+                  <span class="swipe-match-percentage">92% Match</span>
+                </div>
+                <span class="swipe-card-budget">Budget: ₹15,000 • Best: Spring</span>
+                <div class="swipe-card-bestfor">
+                  <span class="bestfor-tag">Yoga</span>
+                  <span class="bestfor-tag">Rafting</span>
+                  <span class="bestfor-tag">Temples</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="swipe-card" data-id="card-jaipur" data-dest="Jaipur">
+              <div class="swipe-card-img-wrapper">
+                <img src="assets/images/jaipur.jpg" alt="Jaipur">
+                <div class="swipe-overlay-stamp like">SAVE</div>
+                <div class="swipe-overlay-stamp skip">SKIP</div>
+              </div>
+              <div class="swipe-card-info">
+                <div class="swipe-card-header">
+                  <h3 class="swipe-card-title">Jaipur</h3>
+                  <span class="swipe-match-percentage">89% Match</span>
+                </div>
+                <span class="swipe-card-budget">Budget: ₹22,000 • Best: Winter</span>
+                <div class="swipe-card-bestfor">
+                  <span class="bestfor-tag">Palaces</span>
+                  <span class="bestfor-tag">Shopping</span>
+                  <span class="bestfor-tag">Forts</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="swipe-card" data-id="card-nainital" data-dest="Nainital">
+              <div class="swipe-card-img-wrapper">
+                <img src="assets/images/nainital.jpg" alt="Nainital">
+                <div class="swipe-overlay-stamp like">SAVE</div>
+                <div class="swipe-overlay-stamp skip">SKIP</div>
+              </div>
+              <div class="swipe-card-info">
+                <div class="swipe-card-header">
+                  <h3 class="swipe-card-title">Nainital</h3>
+                  <span class="swipe-match-percentage">85% Match</span>
+                </div>
+                <span class="swipe-card-budget">Budget: ₹18,000 • Best: Summer</span>
+                <div class="swipe-card-bestfor">
+                  <span class="bestfor-tag">Lakes</span>
+                  <span class="bestfor-tag">Boating</span>
+                  <span class="bestfor-tag">Hiking</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Controls Panel -->
+          <div class="swipe-controls">
+            <div class="control-btn skip" id="btn-swipe-skip" title="Skip">
+              <i class="fas fa-times"></i>
+            </div>
+            <div class="control-btn info" id="btn-swipe-info" title="More Info">
+              <i class="fas fa-info"></i>
+            </div>
+            <div class="control-btn save" id="btn-swipe-save" title="Save/Like">
+              <i class="fas fa-heart"></i>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== TRIPS SCREEN (ACTIVE MAP ROUTE) ==================== -->
+      <section id="trips-page" class="app-page">
+        <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+          <div>
+            <h2 class="section-title">🗺️ Active Adventure</h2>
+            <p class="section-subtitle">Explore live routes & attractions on map</p>
+          </div>
+          <button id="btn-explore-more" class="btn-glass" style="border-color: var(--accent-color); color: var(--accent-color); font-weight: bold;">
+            <i class="fas fa-search"></i> Explore More
+          </button>
+        </div>
+
+        <div class="trips-split-container">
+          
+          <!-- Animated Route Map Card -->
+          <div class="map-card-outer">
+            <div class="map-header">
+              <span class="map-title">Route: Delhi to Rishikesh</span>
+              <span style="font-size: 10px; color: var(--text-secondary);"><i class="fas fa-location-dot"></i> Interactive Map</span>
+            </div>
+            <div class="map-canvas-container">
+              <canvas id="route-map" class="map-canvas"></canvas>
+              
+              <!-- Pop-up Overlay for attractions -->
+              <div id="map-node-popup" class="map-attraction-overlay">
+                <div>
+                  <div id="popup-node-title" class="map-overlay-title">Select an attraction node</div>
+                  <div id="popup-node-desc" style="font-size: 9px; color: var(--text-secondary); margin-top: 1px;">Click nodes to view price</div>
+                </div>
+                <div id="popup-node-cost" class="map-overlay-cost">₹0</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Itinerary Schedules -->
+          <div class="itinerary-scroller" id="itinerary-scroll-container">
+            
+            <!-- Dynamic itinerary injected by JS -->
+            <div id="dynamic-itinerary-list">
+              <div class="itinerary-day-card">
+                <h4 class="itinerary-day-title">No Active Itinerary</h4>
+                <p style="font-size: 11px; color: var(--text-secondary);">Use the "Smart AI Travel Planner" wizard on the Home tab to build a customized plan!</p>
+              </div>
+            </div>
+
+            <!-- Smart Hotels Section -->
+            <div class="trips-section-divider hotels-row-container" id="hotels-section" style="display: none;">
+              <h2 class="section-title">🏨 AI Smart Stays</h2>
+              <p class="section-subtitle">Top recommendations matching budget & style</p>
+              <div class="hotels-slider" id="hotels-recommendations-list">
+                <!-- Hotel cards injected by JS -->
+              </div>
+            </div>
+
+            <!-- Food Recommendations Section -->
+            <div class="trips-section-divider foods-row-container" id="foods-section" style="display: none;">
+              <h2 class="section-title">🍜 Food Recommendations</h2>
+              <p class="section-subtitle">Must-try local dishes & highly rated eateries</p>
+              <div class="foods-grid" id="foods-recommendations-list">
+                <!-- Food cards injected by JS -->
+              </div>
+            </div>
+
+            <!-- Collapsible Shopping Drawer -->
+            <div class="shopping-drawer-box" id="shopping-section" style="display: none;">
+              <div class="shopping-drawer-header" id="shopping-drawer-toggle">
+                <h4>🛍️ What people usually buy here?</h4>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="shopping-drawer-content">
+                <div class="shopping-list" id="shopping-recommendations-list">
+                  <!-- Shopping items injected by JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Save Trip Action button -->
+            <div class="save-trip-area" id="save-trip-btn-container" style="display: none;">
+              <button id="btn-save-trip-action" class="btn-save-trip">
+                <i class="fas fa-heart"></i> Save Trip to History
+              </button>
+            </div>
+
+            <!-- Follow-up local recommendations chips drawer -->
+            <div class="trips-section-divider follow-up-suggestions-section" id="follow-up-section">
+              <h2 class="section-title">💡 Pip's Local Follow-Ups</h2>
+              <p class="section-subtitle">Click details to unlock secret gems & transport guides</p>
+              <div class="follow-up-chips-grid">
+                <button class="follow-up-chip" data-info="gems">📍 Hidden Gems</button>
+                <button class="follow-up-chip" data-info="food">🍜 Best Local Food</button>
+                <button class="follow-up-chip" data-info="shopping">🛍️ What to Buy</button>
+                <button class="follow-up-chip" data-info="photos">📸 Photo Spots</button>
+                <button class="follow-up-chip" data-info="sunrise">🌄 Sunrise Points</button>
+                <button class="follow-up-chip" data-info="sunset">🌅 Sunset Points</button>
+                <button class="follow-up-chip" data-info="weather">☔ Weather Forecast</button>
+                <button class="follow-up-chip" data-info="transport">🚖 Transport Tips</button>
+                <button class="follow-up-chip" data-info="saving">💰 Ways to Save</button>
+                <button class="follow-up-chip" data-info="adventure">🏕️ Adventures</button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== HISTORY SCREEN ==================== -->
+      <section id="history-page" class="app-page">
+        <div class="section-header">
+          <h2 class="section-title">🕒 Your Travel Logs</h2>
+          <p class="section-subtitle">Relive your previous weekend getaways</p>
+        </div>
+
+        <div class="history-timeline">
+          
+          <!-- Node 1 -->
+          <div class="history-node">
+            <span class="history-node-icon"></span>
+            <div class="history-card">
+              <div class="history-card-header">
+                <span class="history-dest">Weekend in Jaipur</span>
+                <span class="history-date">Mar 12-14, 2026</span>
+              </div>
+              <div class="history-body">
+                <img class="history-pic" src="assets/images/jaipur.jpg" alt="Jaipur Log">
+                <div class="history-info">
+                  <span class="history-budget-spent">Spent: <span>₹18,400</span></span>
+                  <span class="history-favorite"><i class="fas fa-heart" style="color: #ff3366;"></i> Hawa Mahal Street Food</span>
+                </div>
+              </div>
+              <div class="history-footer">
+                <button class="btn-glass btn-history-action" onclick="alert('Viewing Jaipur Itinerary!')">View Again</button>
+                <button class="btn-glass btn-history-action" style="border-color: var(--accent-color);" onclick="alert('Re-creating trip matching Jaipur settings!')">Recreate</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Node 2 -->
+          <div class="history-node">
+            <span class="history-node-icon"></span>
+            <div class="history-card">
+              <div class="history-card-header">
+                <span class="history-dest">Shimla Snow Escape</span>
+                <span class="history-date">Jan 08-11, 2026</span>
+              </div>
+              <div class="history-body">
+                <img class="history-pic" src="assets/images/shimla.jpg" alt="Shimla Log">
+                <div class="history-info">
+                  <span class="history-budget-spent">Spent: <span>₹28,600</span></span>
+                  <span class="history-favorite"><i class="fas fa-heart" style="color: #ff3366;"></i> Kufri Ski Resort</span>
+                </div>
+              </div>
+              <div class="history-footer">
+                <button class="btn-glass btn-history-action" onclick="alert('Viewing Shimla Itinerary!')">View Again</button>
+                <button class="btn-glass btn-history-action" style="border-color: var(--accent-color);" onclick="alert('Re-creating trip matching Shimla settings!')">Recreate</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== PROFILE SCREEN ==================== -->
+      <section id="profile-page" class="app-page">
+        <div class="section-header">
+          <h2 class="section-title">👑 Travel Profile</h2>
+          <p class="section-subtitle">Track your travel levels and achievements</p>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-avatar-container">
+            <img class="profile-avatar" src="assets/images/kyoto.jpg" alt="Avatar">
+            <span class="profile-level-badge">1</span>
+          </div>
+          <span class="profile-name">Traveler</span>
+          <span class="profile-title">Level 1: Weekend Voyager</span>
+          
+          <div class="profile-stats-grid">
+            <div class="profile-stat-box">
+              <span class="profile-stat-val">3</span>
+              <span class="profile-stat-lbl">Trips Done</span>
+            </div>
+            <div class="profile-stat-box">
+              <span class="profile-stat-val">₹12,400</span>
+              <span class="profile-stat-lbl">Money Saved</span>
+            </div>
+            <div class="profile-stat-box">
+              <span class="profile-stat-val">870km</span>
+              <span class="profile-stat-lbl">Roads Travel</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Editable Contact Info Section -->
+        <div class="profile-card profile-details-form-card" style="margin-top: -8px; background: rgba(11, 10, 20, 0.4); border: 1.5px solid rgba(255,255,255,0.06); padding: 20px; border-radius: var(--radius-xl);">
+          <h3 class="section-title" style="margin-bottom: 12px; font-size: 16px; color: var(--accent-color);"><i class="fas fa-id-card"></i> Travel Companion Details</h3>
+          <div class="custom-budget-input-wrapper" style="margin-top: 10px;">
+            
+            <div style="margin-bottom: 12px;">
+              <label style="font-size: 11px; color: var(--text-secondary); margin-bottom: 6px; display: block; font-weight: 600;">Full Name</label>
+              <div class="budget-text-input-box" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); padding: 10px 14px; display: flex; align-items: center;">
+                <i class="fas fa-user" style="color: var(--accent-color); margin-right: 12px; font-size: 14px;"></i>
+                <input type="text" class="budget-textbox" id="profile-name-input" placeholder="e.g. Rahul Sharma" value="" style="background: transparent; border: none; outline: none; color: white; font-family: var(--font-body); font-size: 13px; width: 100%;">
+              </div>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+              <label style="font-size: 11px; color: var(--text-secondary); margin-bottom: 6px; display: block; font-weight: 600;">Phone Number</label>
+              <div class="budget-text-input-box" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); padding: 10px 14px; display: flex; align-items: center;">
+                <i class="fas fa-phone" style="color: var(--accent-color); margin-right: 12px; font-size: 14px;"></i>
+                <input type="text" class="budget-textbox" id="profile-phone-input" placeholder="e.g. +91 98765 43210" value="" style="background: transparent; border: none; outline: none; color: white; font-family: var(--font-body); font-size: 13px; width: 100%;">
+              </div>
+            </div>
+
+            <div style="margin-bottom: 18px;">
+              <label style="font-size: 11px; color: var(--text-secondary); margin-bottom: 6px; display: block; font-weight: 600;">Email Address</label>
+              <div class="budget-text-input-box" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); padding: 10px 14px; display: flex; align-items: center;">
+                <i class="fas fa-envelope" style="color: var(--accent-color); margin-right: 12px; font-size: 14px;"></i>
+                <input type="email" class="budget-textbox" id="profile-email-input" placeholder="e.g. rahul.sharma@example.com" value="" style="background: transparent; border: none; outline: none; color: white; font-family: var(--font-body); font-size: 13px; width: 100%;">
+              </div>
+            </div>
+            
+            <button id="btn-save-profile" class="btn-glass" style="width: 100%; justify-content: center; border-color: var(--accent-color); color: var(--accent-color); font-weight: bold; font-size: 13px; padding: 12px 16px; border-radius: 50px; background: rgba(247, 37, 133, 0.05);">
+              <i class="fas fa-save"></i> Save Profile Details
+            </button>
+          </div>
+        </div>
+
+        <!-- Achievements Badges shelf -->
+        <div class="achievements-section">
+          <h3 class="section-title">🎖️ Travel Milestones</h3>
+          <div class="achievements-grid">
+            
+            <div class="achievement-badge-card" title="Completed a trip to the hills">
+              <span class="badge-icon">🏔️</span>
+              <div class="badge-details">
+                <span class="badge-name">Mountain Lover</span>
+                <span class="badge-desc">Shimla Trip Completed</span>
+              </div>
+            </div>
+
+            <div class="achievement-badge-card" title="Liked a food experience item">
+              <span class="badge-icon">🍜</span>
+              <div class="badge-details">
+                <span class="badge-name">Food Explorer</span>
+                <span class="badge-desc">Jaipur Food Log Found</span>
+              </div>
+            </div>
+
+            <div class="achievement-badge-card locked" title="Unlock by completing a coastal match trip">
+              <span class="badge-icon">🏖️</span>
+              <div class="badge-details">
+                <span class="badge-name">Beach Hunter</span>
+                <span class="badge-desc">Locked (Goa Log Needed)</span>
+              </div>
+            </div>
+
+            <div class="achievement-badge-card locked" title="Unlock by completing 10 trips globally">
+              <span class="badge-icon">🌍</span>
+              <div class="badge-details">
+                <span class="badge-name">World Traveler</span>
+                <span class="badge-desc">Locked (10 Destinations)</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ==================== FLOATING BOTTOM DOCK NAVIGATION (REDESIGNED) ==================== -->
+    <div class="app-nav-dock-container">
+      <nav class="app-nav-dock">
+        <button class="nav-item-btn active-nav-item" data-target="home-page">
+          <i class="fas fa-house"></i>
+          <span class="nav-item-lbl">Home</span>
+        </button>
+        <button class="nav-item-btn" data-target="explore-page">
+          <i class="fas fa-compass"></i>
+          <span class="nav-item-lbl">Explore</span>
+        </button>
+        <button class="nav-item-btn" data-target="match-page">
+          <i class="fas fa-fire"></i>
+          <span class="nav-item-lbl">Match</span>
+        </button>
+        <button class="nav-item-btn" data-target="trips-page">
+          <i class="fas fa-suitcase"></i>
+          <span class="nav-item-lbl">Trips</span>
+        </button>
+        <button class="nav-item-btn" data-target="history-page">
+          <i class="fas fa-history"></i>
+          <span class="nav-item-lbl">History</span>
+        </button>
+        <button class="nav-item-btn" data-target="profile-page">
+          <i class="fas fa-user"></i>
+          <span class="nav-item-lbl">Profile</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Mascot Fox packing loader screen (Global overlay inside app-container) -->
+    <div class="packing-loader-overlay" id="packing-loader">
+      <div class="suitcase-animation-box" id="mascot-loader-emoji">🦊🧳</div>
+      <h4 class="loader-dialogue">Building your perfect adventure...</h4>
+      <div class="loader-checklist">
+        <div class="loader-check-item" id="chk-packing">
+          <span>Mascot Pip packing suitcase...</span>
+          <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        <div class="loader-check-item" id="chk-pricing">
+          <span>Comparing hotel rates...</span>
+          <i class="fas fa-circle-notch"></i>
+        </div>
+        <div class="loader-check-item" id="chk-gems">
+          <span>Finding hidden waterfalls...</span>
+          <i class="fas fa-circle-notch"></i>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ==================== THEME SELECTION BOTTOM SHEET MODAL (REDESIGNED) ==================== -->
+  <div class="theme-modal-backdrop" id="theme-backdrop">
+    <div class="theme-modal-sheet">
+      <div class="theme-sheet-header">
+        <span class="theme-sheet-title">Select Theme Vibe</span>
+        <button class="theme-sheet-close" id="theme-modal-close" title="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="theme-options-list">
+        
+        <div class="theme-option-row selected-option" data-theme="theme-cyber-neon" data-name="Cyber Neon" data-icon="🌌">
+          <div class="theme-option-info">
+            <span class="theme-option-icon">🌌</span>
+            <span>Cyber Neon</span>
+          </div>
+          <i class="fas fa-check theme-check-icon"></i>
+        </div>
+
+        <div class="theme-option-row" data-theme="theme-glacier-slate" data-name="Glacier Slate" data-icon="❄️">
+          <div class="theme-option-info">
+            <span class="theme-option-icon">❄️</span>
+            <span>Glacier Slate</span>
+          </div>
+          <i class="fas fa-check theme-check-icon"></i>
+        </div>
+
+        <div class="theme-option-row" data-theme="theme-sunset-amber" data-name="Sunset Amber" data-icon="🌅">
+          <div class="theme-option-info">
+            <span class="theme-option-icon">🌅</span>
+            <span>Sunset Amber</span>
+          </div>
+          <i class="fas fa-check theme-check-icon"></i>
+        </div>
+
+        <div class="theme-option-row" data-theme="theme-sakura-cream" data-name="Sakura Cream" data-icon="🌸">
+          <div class="theme-option-info">
+            <span class="theme-option-icon">🌸</span>
+            <span>Sakura Cream</span>
+          </div>
+          <i class="fas fa-check theme-check-icon"></i>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Confetti Canvas effect -->
+  <canvas class="confetti-canvas" id="canvas-confetti"></canvas>
+
+  <!-- ==================== SMART TRIP WIZARD MODAL BACKDROP ==================== -->
+  <div id="wizard-backdrop" class="theme-modal-backdrop">
+    <div class="wizard-modal-sheet">
+      
+      <!-- Wizard Header -->
+      <div class="wizard-header">
+        <div class="wizard-nav-top">
+          <button class="theme-sheet-close" id="btn-wizard-close" title="Close Wizard">
+            <i class="fas fa-times"></i>
+          </button>
+          <span style="font-family: var(--font-heading); font-weight: 700; font-size: 14px;">Travel Setup</span>
+          <span class="wizard-progress-emojis" id="wizard-progress-icons">🌎 ✈️ 👥 🎂 🏖️ 💰 📅 ⚙️</span>
+        </div>
+        <div class="wizard-progress-bar-container">
+          <div class="wizard-progress-bar">
+            <div class="wizard-progress-fill" id="wizard-progress-bar-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wizard Content Scrollable steps -->
+      <div class="wizard-content" id="wizard-steps-container">
+
+        <!-- STEP 1: Where do you want to travel to? -->
+        <div class="wizard-step active-step" data-step="1">
+          <h3 class="wizard-question-title">Where would you like to travel?</h3>
+          <p class="wizard-question-desc">Type your dream destination or select a trending spot.</p>
+          <div class="custom-budget-input-wrapper" style="margin-top: 10px;">
+            <div class="budget-text-input-box" style="background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); padding: 12px 16px;">
+              <i class="fas fa-location-dot" style="color: var(--accent-color); margin-right: 10px; font-size: 16px;"></i>
+              <input type="text" class="budget-textbox" id="wizard-dest-input" placeholder="e.g. Mussoorie, Goa, Rishikesh..." value="">
+            </div>
+          </div>
+          <div style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Trending spots:</div>
+          <div class="filter-pills-slider" style="margin-top: 6px; flex-wrap: wrap; gap: 8px;">
+            <div class="filter-pill active" data-dest="Mussoorie">Mussoorie 🏔️</div>
+            <div class="filter-pill" data-dest="Goa">Goa 🏖️</div>
+            <div class="filter-pill" data-dest="Rishikesh">Rishikesh 🛕</div>
+            <div class="filter-pill" data-dest="Jaipur">Jaipur 🏛️</div>
+            <div class="filter-pill" data-dest="Nainital">Nainital 🛶</div>
+            <div class="filter-pill" data-dest="Kasol">Kasol 🌲</div>
+          </div>
+        </div>
+
+        <!-- STEP 2: Where are you traveling from? -->
+        <div class="wizard-step" data-step="2">
+          <h3 class="wizard-question-title">Where are you traveling from?</h3>
+          <p class="wizard-question-desc">Helps us compute accurate transport routes and costs.</p>
+          <div class="custom-budget-input-wrapper" style="margin-top: 10px;">
+            <div class="budget-text-input-box" style="background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); padding: 12px 16px;">
+              <i class="fas fa-plane-departure" style="color: var(--accent-color); margin-right: 10px; font-size: 16px;"></i>
+              <input type="text" class="budget-textbox" id="wizard-origin-input" placeholder="e.g. Delhi, Mumbai, Bangalore..." value="">
+            </div>
+          </div>
+          <div style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Popular origins:</div>
+          <div class="filter-pills-slider" style="margin-top: 6px; flex-wrap: wrap; gap: 8px;">
+            <div class="filter-pill active" data-orig="Delhi">Delhi 🏛️</div>
+            <div class="filter-pill" data-orig="Mumbai">Mumbai 🌊</div>
+            <div class="filter-pill" data-orig="Bangalore">Bangalore 💻</div>
+            <div class="filter-pill" data-orig="Kolkata">Kolkata 🛺</div>
+          </div>
+        </div>
+
+        <!-- STEP 3: Who are you travelling with? -->
+        <div class="wizard-step" data-step="3">
+          <h3 class="wizard-question-title">Who are you travelling with?</h3>
+          <p class="wizard-question-desc">We'll adjust stays and pace based on your group size.</p>
+          <div class="wizard-options-list">
+            <div class="wizard-option-row selected" data-value="solo">
+              <span class="option-emoji">🧭</span>
+              <span>Solo Explorer</span>
+            </div>
+            <div class="wizard-option-row" data-value="couple">
+              <span class="option-emoji">💑</span>
+              <span>As a Couple</span>
+            </div>
+            <div class="wizard-option-row" data-value="friends">
+              <span class="option-emoji">👥</span>
+              <span>With Friends</span>
+            </div>
+            <div class="wizard-option-row" data-value="family">
+              <span class="option-emoji">👨‍👩‍👧‍👦</span>
+              <span>With Family</span>
+            </div>
+            <div class="wizard-option-row" data-value="seniors">
+              <span class="option-emoji">👵</span>
+              <span>Senior Citizens</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 4: Age Group -->
+        <div class="wizard-step" data-step="4">
+          <h3 class="wizard-question-title">What is your age group?</h3>
+          <p class="wizard-question-desc">Helps us recommend appropriate activities and sports.</p>
+          <div class="wizard-options-list">
+            <div class="wizard-option-row selected" data-value="under18">
+              <span class="option-emoji">👶</span>
+              <span>Under 18</span>
+            </div>
+            <div class="wizard-option-row" data-value="18-25">
+              <span class="option-emoji">⚡</span>
+              <span>18 – 25 years</span>
+            </div>
+            <div class="wizard-option-row" data-value="26-40">
+              <span class="option-emoji">💼</span>
+              <span>26 – 40 years</span>
+            </div>
+            <div class="wizard-option-row" data-value="41-60">
+              <span class="option-emoji">🏠</span>
+              <span>41 – 60 years</span>
+            </div>
+            <div class="wizard-option-row" data-value="60plus">
+              <span class="option-emoji">🍵</span>
+              <span>60+ years</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 5: Vacation Vibe Types -->
+        <div class="wizard-step" data-step="5">
+          <h3 class="wizard-question-title">What type of vacation are you looking for?</h3>
+          <p class="wizard-question-desc">Select all the vibes you want (multi-select).</p>
+          <div class="vacation-grid">
+            <div class="vacation-pill selected" data-value="mountain">🏔️ Mountains</div>
+            <div class="vacation-pill" data-value="beach">🏖️ Beaches</div>
+            <div class="vacation-pill" data-value="trekking">🥾 Trekking</div>
+            <div class="vacation-pill" data-value="nature">🌲 Nature</div>
+            <div class="vacation-pill" data-value="food">🍜 Food Exploration</div>
+            <div class="vacation-pill" data-value="heritage">🏛️ Heritage</div>
+            <div class="vacation-pill" data-value="spiritual">🛕 Spiritual</div>
+            <div class="vacation-pill" data-value="adventure">🎢 Adventure</div>
+            <div class="vacation-pill" data-value="shopping">🛍️ Shopping</div>
+            <div class="vacation-pill" data-value="photos">📸 Photography</div>
+            <div class="vacation-pill" data-value="nightlife">🌃 Nightlife</div>
+            <div class="vacation-pill" data-value="snow">❄️ Snow</div>
+            <div class="vacation-pill" data-value="camping">🏕️ Camping</div>
+          </div>
+        </div>
+
+        <!-- STEP 6: Budget Range & Text Input -->
+        <div class="wizard-step" data-step="6">
+          <h3 class="wizard-question-title">What's your trip budget?</h3>
+          <p class="wizard-question-desc">Drag the slider or enter a custom amount.</p>
+          
+          <div class="budget-slider-box">
+            <div class="budget-values-display">
+              <span>Min: ₹5,000</span>
+              <span class="budget-val-lbl" id="wizard-slider-val">₹30,000</span>
+              <span>Max: ₹3,00,000</span>
+            </div>
+            <input type="range" class="wizard-range-slider" id="wizard-budget-slider" min="5000" max="300000" step="5000" value="30000">
+            
+            <div class="custom-budget-input-wrapper">
+              <span class="custom-input-label">Or Custom Budget (Exceeding Slider)</span>
+              <div class="budget-text-input-box">
+                <span>₹</span>
+                <input type="number" class="budget-textbox" id="wizard-custom-budget" placeholder="Enter custom budget e.g. 450000" value="30000">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 7: Days duration -->
+        <div class="wizard-step" data-step="7">
+          <h3 class="wizard-question-title">How many days are you travelling?</h3>
+          <p class="wizard-question-desc">Choose a quick preset or define a custom length.</p>
+          <div class="duration-grid">
+            <div class="duration-chip" data-value="weekend">Weekend</div>
+            <div class="duration-chip" data-value="3">3 Days</div>
+            <div class="duration-chip selected" data-value="5">5 Days</div>
+            <div class="duration-chip" data-value="7">7 Days</div>
+            <div class="duration-chip" data-value="10">10 Days</div>
+            <div class="duration-chip" data-value="15">15+ Days</div>
+          </div>
+          <div class="duration-custom-box">
+            <span style="font-size: 12px; font-weight: 500;">Custom Days</span>
+            <input type="number" class="duration-custom-textbox" id="wizard-custom-days" min="1" max="60" placeholder="e.g. 12" value="5">
+          </div>
+        </div>
+
+        <!-- STEP 8: Special Preferences -->
+        <div class="wizard-step" data-step="8">
+          <h3 class="wizard-question-title">Any special preferences?</h3>
+          <p class="wizard-question-desc">Select details to unlock hidden gems and food alternatives.</p>
+          <div class="vacation-grid">
+            <div class="vacation-pill" data-value="veg">🥦 Vegetarian</div>
+            <div class="vacation-pill" data-value="vegan">🌿 Vegan</div>
+            <div class="vacation-pill" data-value="luxury">💎 Luxury Stays</div>
+            <div class="vacation-pill" data-value="budget">🪙 Budget Stays</div>
+            <div class="vacation-pill" data-value="kids">👶 Kid Friendly</div>
+            <div class="vacation-pill" data-value="pets">🐾 Pet Friendly</div>
+            <div class="vacation-pill" data-value="wheelchair">♿ Wheelchair Acc.</div>
+            <div class="vacation-pill" data-value="sports">🪂 Sports Gear</div>
+            <div class="vacation-pill selected" data-value="gems">🔍 Hidden Gems</div>
+          </div>
+        </div>
+
+        <!-- Cute Mascot Fox tip bubble -->
+        <div class="wizard-mascot-tip">
+          <span class="mascot-avatar">🦊</span>
+          <div class="mascot-tip-speech" id="wizard-mascot-speech">
+            "Great! Mountains is an awesome choice. Did you know Mussoorie averages 21°C during summer?"
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Wizard Footer navigation controls -->
+      <div class="wizard-footer">
+        <button class="btn-wizard-action btn-wizard-back" id="btn-wizard-prev" style="visibility: hidden;">Back</button>
+        <button class="btn-wizard-action btn-wizard-next" id="btn-wizard-next">Next</button>
+      </div>
+
+
+
+    </div>
+  </div>
+
+  <!-- ==================== INTERACTIVE FOLLOW-UP DETAILED INFO MODAL ==================== -->
+  <div id="info-sheet-modal" class="theme-modal-backdrop">
+    <div class="info-sheet-container">
+      <div class="info-sheet-header">
+        <span class="info-sheet-title" id="info-modal-title">📍 Hidden Gems</span>
+        <button class="info-sheet-close" id="btn-info-modal-close" title="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="info-sheet-content" id="info-modal-content">
+        <!-- Content will be injected by JavaScript based on destination database -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ONBOARDING OVERLAY ==================== -->
+  <div id="onboarding-overlay" class="onboarding-backdrop" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(8, 7, 16, 0.88); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); z-index: 9999; justify-content: center; align-items: center;">
+    
+    <!-- Step 1: Input Form Sheet -->
+    <div id="onboarding-form-sheet" style="width: 90%; max-width: 460px; padding: 30px; background: rgba(18, 16, 32, 0.85); border: 1.5px solid rgba(255,255,255,0.08); border-radius: var(--radius-xl); box-shadow: 0 25px 60px rgba(0,0,0,0.8); display: flex; flex-direction: column; gap: 20px; box-sizing: border-box;">
+      
+      <div style="text-align: center; margin-bottom: 8px;">
+        <span style="font-size: 54px; animation: mascotFloatHome 3s ease-in-out infinite; display: inline-block;">🦊</span>
+        <h2 style="font-family: var(--font-heading); font-size: 24px; color: white; margin-top: 12px; margin-bottom: 6px;">Welcome to TravanaAI!</h2>
+        <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin: 0;">Let's customize your profile before we start planning your dream adventures.</p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div>
+          <label style="font-size: 11px; color: var(--text-secondary); margin-bottom: 6px; display: block; font-weight: 600;">Full Name</label>
+          <div class="budget-text-input-box" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); padding: 12px 14px; display: flex; align-items: center;">
+            <i class="fas fa-user" style="color: var(--accent-color); margin-right: 12px; font-size: 14px;"></i>
+            <input type="text" id="onboard-name-input" placeholder="Enter your full name" style="background: transparent; border: none; outline: none; color: white; font-family: var(--font-body); font-size: 13px; width: 100%;">
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size: 11px; color: var(--text-secondary); margin-bottom: 6px; display: block; font-weight: 600;">Phone Number</label>
+          <div class="budget-text-input-box" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); padding: 12px 14px; display: flex; align-items: center;">
+            <i class="fas fa-phone" style="color: var(--accent-color); margin-right: 12px; font-size: 14px;"></i>
+            <input type="text" id="onboard-phone-input" placeholder="e.g. +91 98765 43210" style="background: transparent; border: none; outline: none; color: white; font-family: var(--font-body); font-size: 13px; width: 100%;">
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size: 11px; color: var(--text-secondary); margin-bottom: 6px; display: block; font-weight: 600;">Email Address</label>
+          <div class="budget-text-input-box" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); padding: 12px 14px; display: flex; align-items: center;">
+            <i class="fas fa-envelope" style="color: var(--accent-color); margin-right: 12px; font-size: 14px;"></i>
+            <input type="email" id="onboard-email-input" placeholder="e.g. you@example.com" style="background: transparent; border: none; outline: none; color: white; font-family: var(--font-body); font-size: 13px; width: 100%;">
+          </div>
+        </div>
+      </div>
+
+      <button id="btn-submit-onboarding" class="btn-glass" style="margin-top: 10px; width: 100%; justify-content: center; background: var(--accent-gradient); border: none; color: white; font-weight: 800; font-size: 14px; padding: 14px; border-radius: 50px; box-shadow: 0 8px 20px var(--accent-glow);">
+        Get Started &rarr;
+      </button>
+    </div>
+
+    <!-- Step 2: Welcome Splash screen (hidden initially) -->
+    <div id="onboarding-welcome-splash" style="display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 16px; opacity: 0; transform: scale(0.9); transition: opacity 0.8s ease, transform 0.8s ease;">
+      <div style="font-size: 84px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); animation: mascotFloatHome 3s ease-in-out infinite;">🦊✨</div>
+      <h1 id="onboard-welcome-text" style="font-family: var(--font-heading); font-size: 42px; font-weight: 800; color: white; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 10px 30px rgba(247,37,133,0.35); letter-spacing: -0.5px; margin: 0;">Welcome, Traveler!</h1>
+      <p style="font-size: 16px; color: var(--text-secondary); max-width: 320px; line-height: 1.5; font-weight: 500; margin: 0;">Your premium travel companion is ready.</p>
+    </div>
+
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/app.js?v=6"></script>
+</body>
+</html>

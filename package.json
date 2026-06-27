@@ -1,0 +1,10 @@
+{
+  "name": "travana-ai",
+  "version": "1.0.0",
+  "description": "TravanaAI - Premium Travel Companion UI Prototype",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx -y http-server . -p 3000"
+  },
+  "dependencies": {}
+}
